@@ -6,7 +6,7 @@ interface Contact extends Object {
     firstName: string,
     lastName: string,
     email: string,
-    zipcode: number,
+    zipcode: string,
     usState: string,
     isComplete: boolean
 }
@@ -18,7 +18,7 @@ class ContactStore extends PersistentStore<Contact> {
             firstName: "",
             lastName: "",
             email: "",
-            zipcode: 0,
+            zipcode: "",
             usState: "",
             isComplete: false
         };
@@ -36,7 +36,7 @@ class ContactStore extends PersistentStore<Contact> {
         this.state.email = value;
     }
 
-    setZipcode(value: number){
+    setZipcode(value: string){
         this.state.zipcode = value;
     }
 

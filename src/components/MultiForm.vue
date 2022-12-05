@@ -1,19 +1,19 @@
 <template>
     <div id="form-block" class="res-square w-full max-w-280 h-auto">
         <div class="res-square-content">
-            <form v-if="isInitialized" id="multiForm" :style="`transform:translate(0,${(state.currStep * (100/6))* -1}%)`">
+            <form id="multiForm" :style="`transform:translate(0,${(state.currStep * (100/6))* -1}%)`">
                     <template v-for="(field, index) in formSteps" :key="'field'+index">
                         <div class="form-step w-full h-auto block">
                             <div class="form-step-content gap-2">
                                 <label class="text-sm text-white text-left">{{ field.label }}</label>
-                                <input tabindex="-1" :placeholder="field.label" class="w-full h-auto p-6 text-xl text-gray-600 bg-transparent border-blue-light border-2 focus:ring-0 focus:outline-white" :type="field.type" :class="{'wrong-input': !field.valid}" v-model="field.name" />
+                                <input v-on:keydown.enter.prevent='submit' tabindex="-1" :placeholder="field.label" class="w-full h-auto p-6 text-xl text-gray-600 bg-transparent border-blue-light border-2 focus:ring-0 focus:outline-white" :type="field.type" :class="{'wrong-input': !field.valid}" v-model="responses[`${field.name}`]" />
                                 <span class="text-xs text-red" v-show="!field.valid">{{ field.warn }}</span>
                             </div>
                         </div>
                     </template>
                     <div class="form-step w-full h-auto block">
                         <div class="form-step-content">
-                            <select tabindex="-1" class="w-full h-auto p-4 text-xl text-gray-600 bg-transparent border-blue-light border-2 focus:ring-0 focus:outline-white" name="usState" id="usState" v-model="usState">
+                            <select tabindex="-1" class="w-full h-auto p-4 text-xl text-gray-600 bg-transparent border-blue-light border-2 focus:ring-0 focus:outline-white" name="usState" id="usState" value="responses['usState']" v-model="responses['usState']">
                                 <option value="AL">AL</option>
                                 <option value="AK">AK</option>
                                 <option value="AR">AR</option>
@@ -71,14 +71,14 @@
                     <div class="form-step w-full h-auto block">
                         <div class="form-step-content gap-2">
                             <p class="text-sm text-white text-left">Sign Up Now!</p>
-                            <button tabindex="-1" id="formSubmit" @click="submit" class="text-3xl p-2 rounded-lg w-full bg-blue-dark text-white">Submit</button>
+                            <button tabindex="-1" id="formSubmit" @click.prevent="submit" class="text-3xl p-2 rounded-lg w-full bg-blue-dark text-white">Submit</button>
                         </div>
                     </div>
             </form>
     </div>
    </div>
    <div id="actions" class="flex flex-row items-center justify-evenly absolute z-50 w-full max-w-280 h-auto">
-        <button tabindex="-1" class="mt-8" ref="prevButton" @click="minusStep" :disabled="(state.currStep <= 0)">
+        <button tabindex="-1" ref="prevButton" @click="minusStep" :disabled="(state.currStep <= 0)">
             <i class="text-4xl bi bi-caret-down-fill"></i>
         </button>
         <button tabindex="-1" ref="nextButton" @click="checkFields" :disabled="(state.currStep == 5)">
@@ -92,13 +92,15 @@
   import {onBeforeMount, defineComponent} from 'vue'
 
   export default defineComponent({
-    data: () => {
+    data(){
         return {
-            firstName: "",
-            lastName: "",
-            email: "",
-            zipcode: "",
-            usState: "",
+            responses:{
+                firstName: contactStore.getState().firstName,
+                lastName: contactStore.getState().lastName,
+                email: contactStore.getState().email,
+                zipcode: contactStore.getState().zipcode,
+                usState: contactStore.getState().usState
+            },
             formSteps: [
                 {
                     name:"firstName", label: "First Name", type: "string", warn: "Only type letters", value: "", valid: true, pattern: /^[A-Za-z/s]+$/
@@ -130,14 +132,18 @@
         let valid = true;
         let step = contactStore.getState().currStep;
         let field = this.formSteps[step];
+        console.log(contactStore.getState());
         if(step < 4){
-          if(!field.pattern.test(field.value.toString())) {
+          if(!field.pattern.test(this.responses[field.name])) {
             valid = false;
             this.formSteps[step].valid = false;
           }
           else {
             this.formSteps[step].valid = true;
           }
+        }
+        if(step >= 4){
+            contactStore.setComplete(true);
         }
         if(valid) {
           this.nextStep();
@@ -150,27 +156,20 @@
       }
     },
     watch:{
-        firstName(newVal,oldVal){
-            contactStore.setFirstName(newVal);
-        },
-        lastName(newVal,oldVal){
-            contactStore.setLastName(newVal);
-        },
-        email(newVal,oldVal){
-            contactStore.setEmail(newVal);
-        },
-        zipcode(newVal,oldVal){
-            contactStore.setZipcode(newVal);
-        },
-        usState(newVal,oldVal){
-            contactStore.setUsState(newVal);
-        },
+        responses: {
+            handler: function (newVal, oldVal) {
+                contactStore.setFirstName(newVal['firstName']);
+                contactStore.setLastName(newVal['lastName']);
+                contactStore.setEmail(newVal['email']);
+                contactStore.setZipcode(newVal['zipcode']);
+                contactStore.setUsState(newVal['usState']);
+            },
+            deep: true
+        }
     },
     setup() {
-        onBeforeMount(async () => await contactStore.init())
         return {
             state: contactStore.getState(),
-            isInitialized: contactStore.getIsInitialized()
         }
     }
   });
@@ -203,7 +202,7 @@ form#multiForm{
   transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg) translateX(113px) translateY(-120px) scale(.8);
   @apply px-4;
   @screen sm{
-    transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg) translateX(141px) translateY(175px) scale(1);
+    transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg) translateX(161px) translateY(180px) scale(1);
   }
 }
 #actions button{
