@@ -1,0 +1,1 @@
+export const CONTACT_STORE_NAME = "CONTACT_STORE";

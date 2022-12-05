@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    font-size: 20px;
+    overflow-x:hidden;
+  }
+
+
+body{
+    @apply text-white bg-black;
+}
+
+.btn{
+  @apply py-3 px-8 text-2xl font-bold bg-yellow-DEFUALT text-blue-dark rounded-lg transition-all;
+  &.btn-red{
+    @apply bg-red;
+  }
+  &:hover{
+    @apply bg-blue-dark text-white transform rotate-3;
+  }
+}
+
+.text-border{
+  filter: drop-shadow(0px 5px 0px theme('colors.blue.dark'));
+}
