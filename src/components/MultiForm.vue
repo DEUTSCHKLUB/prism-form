@@ -78,7 +78,7 @@
     </div>
    </div>
    <div id="actions" class="flex flex-row items-center justify-evenly absolute z-50 w-full max-w-280 h-auto">
-        <button tabindex="-1" ref="prevButton" @click="minusStep" :disabled="(state.currStep <= 0)">
+        <button tabindex="-1" class="mt-8" ref="prevButton" @click="minusStep" :disabled="(state.currStep <= 0)">
             <i class="text-4xl bi bi-caret-down-fill"></i>
         </button>
         <button tabindex="-1" ref="nextButton" @click="checkFields" :disabled="(state.currStep == 5)">
