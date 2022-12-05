@@ -199,7 +199,7 @@ form#multiForm{
     }
 }
 #actions{
-  transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg) translateX(113px) translateY(-120px) scale(.8);
+  transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg) translateX(113px) translateY(180px) scale(.8);
   @apply px-4;
   @screen sm{
     transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg) translateX(161px) translateY(180px) scale(1);
