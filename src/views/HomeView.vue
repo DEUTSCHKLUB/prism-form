@@ -5,21 +5,20 @@
         <ScreenView></ScreenView>
       </div>
     </div>
-    <div id="form-block" class="res-square w-full max-w-280 h-auto">
+    <MultiForm></MultiForm>
+    <div id="nav-block" class="res-square w-full max-w-280 h-auto">
       <div class="res-square-content">
-        <MultiForm></MultiForm>
       </div>
     </div>
-    <div id="nav-block" class="res-square w-full max-w-280 h-auto bg-blue-dark"><div class="res-square-content">nav</div></div>
-    <!--<div id="form-title" class="res-square w-full max-w-280 h-auto">
-      <div class="res-square-content p-4 flex items-end justify-end text-left">
-        <h1 class="text-6xl">Sign Up Form</h1>
+    <div id="form-title" class="res-square w-full max-w-280 h-auto">
+      <div class="res-square-content p-4 flex items-end justify-end lg:justify-start text-left font-bold text-blue-dark mb-4">
+        <h1 class="text-4xl"><span class="block"><i class="bi bi-caret-up text-blue-dark"></i><i class="bi bi-caret-up-fill text-blue-dark"></i><i class="bi bi-caret-up-fill text-blue"></i></span> Form</h1>
       </div>
-    </div>-->
+    </div>
     <div id="step-count">
       <h4 class="text-white">
         <span class="text-blue block">Step {{state.currStep + 1}}</span>
-        of 5
+        of 6
       </h4>
     </div>
   </div>
@@ -71,15 +70,6 @@ export default {
     transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg) translateX(-140px) translateY(70px) scale(1);
   }
 }
-#form-block{
-  transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg) scale(.8);
-  mask-image: linear-gradient(to top, #000, #000 85%, transparent 100%);
-  border-radius: .75rem;
-  /* background-image: linear-gradient(to bottom, theme('colors.blue.light'), #000 30%); */
-  @screen sm{
-    transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg) scale(1);
-  }
-}
 #nav-block{
   transform: rotateX(30deg) rotateY(-45deg) rotateZ(0deg) translateX(113px) translateY(-120px) scale(.8);
   @screen sm{
@@ -88,7 +78,8 @@ export default {
 }
 #form-title{
   position:absolute !important;
-  transform: rotateX(30deg) rotateY(46deg) rotateZ(0deg) translateX(36px) translateY(-142px) translateZ(75px) scale(.8);
+  transform: rotateX(30deg) rotateY(45deg) rotateZ(0deg) translateX(36px) translateY(-142px) translateZ(75px) scale(.8);
+  mask-image: linear-gradient(to top, transparent, #000 25%, #000 85%, transparent 100%);
   @screen sm{
     transform: rotateX(30deg) rotateY(46deg) rotateZ(0deg) translateX(-139px) translateY(254px) scale(1);
   }

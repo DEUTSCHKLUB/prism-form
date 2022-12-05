@@ -1,5 +1,5 @@
 <template>
-    <div id="screens" :style="`transform:translate(0,${(state.currStep * (100/5))*-1})`">
+    <div id="screens" :style="`transform:translate(0,${(state.currStep * (100/6))* -1}%)`">
         <div class="screen-step w-full h-auto block">
             <div class="screen-step-content">
                 <h2 class="text-4xl">Welcome! <span class="text-blue">What's your name?</span></h2>
@@ -46,16 +46,6 @@
 <script lang="ts">  
 import {contactStore} from "../store/contactStore";
 export default {
-  data(){
-      return{
-          currStep: 0,
-          firstName: contactStore.getState().firstName,
-          lastName: contactStore.getState().lastName,
-          email: contactStore.getState().email,
-          zipcode: contactStore.getState().zipcode,
-          usState: contactStore.getState().usState
-      }
-  },
   setup() {
       return {
           state: contactStore.getState()

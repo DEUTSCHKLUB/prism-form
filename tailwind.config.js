@@ -50,6 +50,9 @@ module.exports = {
         maxWidth:{
             '280': '280px'
         },
+        maxHeight:{
+            '280': '280px'
+        },
         spacing:{
             'full': '100%',
             'half': '50%'
